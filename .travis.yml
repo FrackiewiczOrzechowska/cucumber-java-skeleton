@@ -1,16 +1,12 @@
-language: - java
+language:
+    - java
 
+jdk:
+    - oraclejdk8
 
-jdk: - oraclejdk8
+script:
+    - ./gradlew check
+    - ./gradlew jacocoTestReport
 
-before script: - chmod +x gradlew
-
-script :
-
-  - ./gradlew check
-
-
-
-
-
-after_success: - bash <(curl -s https://codecov.io/bash)
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
