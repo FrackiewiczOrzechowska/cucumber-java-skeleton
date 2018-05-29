@@ -5,8 +5,10 @@ jdk: - oraclejdk8
 
 before script: - chmod +x gradlew
 
-script : - ./gradlew check
-- ./gradlew cucumber
+script :
+- ./gradlew assemble
+  - ./gradlew check --stacktrace --info
+  - ./gradlew jacocoTestReport
 
 
 

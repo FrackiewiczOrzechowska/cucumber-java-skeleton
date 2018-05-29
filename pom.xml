@@ -31,12 +31,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>pro-plugin</artifactId>
-            <version>${cucumber.pro.version}</version>
-            <scope>test</scope>
-        </dependency>
+        
 
         <dependency>
             <groupId>junit</groupId>
