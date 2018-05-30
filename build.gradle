@@ -14,7 +14,20 @@ dependencies {
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.1'
     testCompile 'io.cucumber:cucumber-java8:' + cucumberVersion
     testCompile 'io.cucumber:cucumber-junit:' + cucumberVersion
+    testCompile 'junit:junit:' + junitVersion
 }
+
+repositories {
+    mavenCentral()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
 
 configurations {
     cucumberRuntime { extendsFrom testRuntime }
@@ -24,9 +37,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
-repositories {
-    mavenCentral()
-}
+
 
 test {
     testLogging {
@@ -35,11 +46,5 @@ test {
     }
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled false
-    }
-}
 
 
