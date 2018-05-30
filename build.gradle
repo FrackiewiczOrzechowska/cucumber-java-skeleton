@@ -36,3 +36,10 @@ task cucumber() {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
