@@ -16,7 +16,7 @@ public class Account {
             this.owner = owner;
         }
 
-        
+
 
         public Customer getOwner() {
             return owner;
