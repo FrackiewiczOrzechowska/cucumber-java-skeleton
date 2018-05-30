@@ -1,13 +1,13 @@
-language:
-    - java
+language: java
+
+before_install:
+ - chmod +x gradlew
 
 jdk:
-    - oraclejdk8
+  - oraclejdk8
 
-script:
-    - ./gradlew check
-    - ./gradlew jacocoTestReport
+env:
+- CI=true
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
-
+ - bash <(curl -s https://codecov.io/bash)
