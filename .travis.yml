@@ -6,6 +6,11 @@ before_install:
 jdk:
   - oraclejdk8
 
+   "script": [
+      "./gradlew check",
+      "./gradlew jacocoTestReport"
+    ]
+
 env:
 - CI=true
 
