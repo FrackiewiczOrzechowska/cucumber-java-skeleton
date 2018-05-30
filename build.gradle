@@ -1,25 +1,23 @@
-apply plugin: 'java'
-apply plugin: 'groovy'
+apply plugin: "groovy"
+apply plugin: "java"
 apply plugin: 'jacoco'
 
-project.ext {
-    cucumberVersion = '3.0.0'
-    cucumberProVersion = '2.0.4'
-    junitVersion = '4.12'
-    }
+repositories { mavenCentral() }
+
+configurations {
+    jacocoRuntime
+}
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.4.9"
     compile group: 'com.google.guava', name: 'guava', version: '24.1-jre'
+    testCompile "info.cukes:cucumber-groovy:1.2.0"
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+    testCompile "info.cukes:gherkin:2.12.2"
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.1'
-    testCompile 'io.cucumber:cucumber-java8:' + cucumberVersion
-    testCompile 'io.cucumber:cucumber-junit:' + cucumberVersion
-    testCompile 'junit:junit:' + junitVersion
-}
-
-repositories {
-    mavenCentral()
+    testRuntime files("$buildDir/testkit")
+    jacocoRuntime "org.jacoco:org.jacoco.agent:${jacoco.toolVersion}:runtime"
+    testCompile group: 'nl.jqno.equalsverifier', name: 'equalsverifier', version: '2.4.6'
 }
 
 jacocoTestReport {
@@ -29,15 +27,29 @@ jacocoTestReport {
     }
 }
 
+check.dependsOn jacocoTestReport
 
 
+configurations {
+    cucumberRuntime { extendsFrom testRuntime }
+}
 
-test {
-    testLogging {
-        events "passed", "skipped", "failed"
-        exceptionFormat "full"
+task cucumber() {
+    dependsOn testClasses
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'pretty',
+                    '--tags', '~@wip',
+                    '--glue', 'src/test/groovy/com/plgrnds/tests/bank/steps',
+                    'src/test/resources'
+            ]
+        }
     }
 }
 
-
-
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
