@@ -1,5 +1,6 @@
 package bankingSystem;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,6 +11,9 @@ public class Account {
 
         private final UUID id;
         private final Customer owner;
+        private BigDecimal balance;
+        public BigDecimal amount;
+
 
         public Account(Customer owner) {
             id = UUID.randomUUID();
@@ -17,8 +21,39 @@ public class Account {
         }
 
 
+    public BigDecimal getBalance() {
+        return this.balance;
+    }
 
-        public Customer getOwner() {
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void printBalance() {
+        System.out.println("Your balance equals " + balance + " zloty");
+    }
+
+    public void withdraw(BigDecimal amount)  {
+        this.balance = this.balance.subtract(amount);
+        System.out.println("Withdrawing " + amount + " zloty");
+        printBalance();
+    }
+
+
+    public void deposit(BigDecimal amount) {
+        this.balance = this.balance.add(amount);
+    }
+
+    public void transfer(Account transferDestination, BigDecimal amount){
+
+        this.withdraw(amount);
+        System.out.println("Transferring " + amount + "zloty to " + transferDestination);
+        printBalance();
+    }
+
+        public Customer getOwner()
+        {
             return owner;
         }
 
@@ -37,4 +72,6 @@ public class Account {
 
 
     }
+
+
 }
