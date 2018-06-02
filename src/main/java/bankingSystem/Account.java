@@ -7,18 +7,18 @@ import java.util.UUID;
 public class Account {
 
 
-
-
         private final UUID id;
         private final Customer owner;
         private BigDecimal balance;
         public BigDecimal amount;
+        private BigDecimal beginningBalance;
 
 
         public Account(Customer owner) {
             id = UUID.randomUUID();
             this.owner = owner;
         }
+
 
 
     public BigDecimal getBalance() {
